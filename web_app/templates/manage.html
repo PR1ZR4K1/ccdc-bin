@@ -1,0 +1,213 @@
+{%- extends "base.html" %}
+<body>
+   {% block content %}
+   <div class="container">
+      <div class="col-lg-12">
+         <div class="page-header">
+            <h1>Manage:</h1>
+         </div>
+      </div>
+   </div>
+   <div class="container">
+      <div class="jumbotron">
+         <ul class="nav nav-tabs">
+            <li class="nav-item">
+               <a class="nav-link active" data-toggle="tab" href="#quickstats">Quick Stats</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" data-toggle="tab" href="#management">Management</a>
+            </li>
+            
+            <li class="nav-item">
+               <a class="nav-link" data-toggle="tab" href="#portdetail">Port Detail</a>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link" data-toggle="tab" href="#rawoutput">Raw Output</a>
+            </li>
+         </ul>
+         <div id="myTabContent" class="tab-content">
+            <div class="tab-pane active" id="quickstats">
+               <br>
+               <p>Host name: {{ box.name}}</p>
+               <p>Box IP: {{ box.ip }}</p>
+               <p>Operating System: {{ box.os }}</p>
+               {% if box.isOn == 1 %}
+               <p>Service Status: Up</p>
+               {% else %}
+               <p>Service Status: Down</p>
+               {% endif %}
+               <br>
+            </div>
+            <div class="tab-pane" id="management">
+               <form data-bitwarden-watching="1">
+               <fieldset>
+                  <div class="form-group row">
+                     <div class="col-sm-10">
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="exampleInputEmail1" class="form-label mt-4">Email address</label>
+                     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                  </div>
+                  <div class="form-group">
+                     <label for="exampleInputPassword1" class="form-label mt-4">Password</label>
+                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  </div>
+                  <div class="form-group">
+                     <label for="exampleSelect1" class="form-label mt-4">Example select</label>
+                     <select class="form-select" id="exampleSelect1">
+                     <option>1</option>
+                     <option>2</option>
+                     <option>3</option>
+                     <option>4</option>
+                     <option>5</option>
+                     </select>
+                  </div>
+                  <div class="form-group">
+                     <label for="exampleTextarea" class="form-label mt-4">Example textarea</label>
+                     <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                  </div>
+                  <div class="form-group">
+                     <label for="formFile" class="form-label mt-4">Default file input example</label>
+                     <input class="form-control" type="file" id="formFile">
+                  </div>
+                  <fieldset class="form-group">
+                     <legend class="mt-4">Radio buttons</legend>
+                     <div class="form-check">
+                     <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+                        Option one is this and that—be sure to include why it's great
+                     </label>
+                     </div>
+                     <div class="form-check">
+                     <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+                        Option two can be something else and selecting it will deselect option one
+                     </label>
+                     </div>
+                     <div class="form-check disabled">
+                     <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3" disabled="">
+                        Option three is disabled
+                     </label>
+                     </div>
+                  </fieldset>
+                  <fieldset class="form-group">
+                     <legend class="mt-4">Checkboxes</legend>
+                     <div class="form-check">
+                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                     <label class="form-check-label" for="flexCheckDefault">
+                        Default checkbox
+                     </label>
+                     </div>
+                     <div class="form-check">
+                     <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked="">
+                     <label class="form-check-label" for="flexCheckChecked">
+                        Checked checkbox
+                     </label>
+                     </div>
+                  </fieldset>
+                  <fieldset>
+                     <legend class="mt-4">Switches</legend>
+                     <div class="form-check form-switch">
+                     <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                     <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+                     </div>
+                     <div class="form-check form-switch">
+                     <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked="">
+                     <label class="form-check-label" for="flexSwitchCheckChecked">Checked switch checkbox input</label>
+                     </div>
+                  </fieldset>
+                  <button type="submit" class="btn btn-primary">Submit Changes</button>
+               </fieldset>
+               </form>
+            </div>
+            <div class="tab-pane" id="portdetail">
+               <div class="row">
+                  <div class="col-lg-6">
+                     <br>
+                     <p>Total ports on box: {{ box.total }}</p>
+                     <p>Ports in UP state: {{ box.up }}</p>
+                     <p>Ports in DOWN state: {{ box.down }}</p>
+                     <p>Ports in DISABLED state: {{ box.disabled }}</p>
+                  </div>
+                  <div class="col-lg-6">
+                     <br>
+                     {% if box.int10m %}
+                     <p>Total Ports operating at 10M: {{ box.int10m }}</p>
+                     {% endif %}
+                     {% if box.int100m %}
+                     <p>Total Ports operating at 100M: {{ box.int100m }}</p>
+                     {% endif %}
+                     {% if box.int1g %}
+                     <p>Total Ports operating at 1G: {{ box.int1g }}</p>
+                     {% endif %}
+                     {% if box.int10g %}
+                     <p>Total Ports operating at 10G: {{ box.int10g }}</p>
+                     {% endif %}
+                     {% if box.int25g %}
+                     <p>Total Ports operating at 25G: {{ box.int25g }}</p>
+                     {% endif %}
+                     {% if box.int40g %}
+                     <p>Total Ports operating at 40G: {{ box.int40g }}</p>
+                     {% endif %}
+                     {% if box.int100g %}
+                     <p>Total Ports operating at 100G: {{ box.int100g }}</p>
+                     {% endif %}
+                     <p></p>
+                     <p>Copper Ports: {{ box.copper }}</p>
+                     <p>SFP-based Ports: {{ box.sfp }}</p>
+                     <p>Virtual Ports: {{ box.virtual }}</p>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="form-inline">
+                     <div class="page-header">
+                        <h3>Detailed Port Information:</h3>
+                     </div>
+                     <table class="table table-hover">
+                        <thead>
+                           <tr>
+                              <th scope="col">Interface Name</th>
+                              <th scope="col">Description</th>
+                              <th scope="col">MAC Address</th>
+                              <th scope="col">State</th>
+                              <th scope="col">Speed</th>
+                              <th scope="col">Duplex</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           {% for interface in interfaces %}
+                           <tr>
+                              <td>{{ interface.name }}</td>
+                              <td>{{ interface.description }}</td>
+                              <td>{{ interface.physical_address }}</td>
+                              <td>
+                                 {% if interface.oper_status == 'up' %}
+                                 <p class="text-success">Up</span>
+                                 {% else %}
+                                 <p class="text-danger">Down</span>
+                                 {% endif %}
+                              <td>{{ interface.oper_speed }}</td>
+                              <td>{{ interface.oper_duplex }}</td>
+                              </td>
+                           {% endfor %}
+                        </tbody>
+                  </table>
+                  </div>
+               </div>
+            </div>
+            <div class="tab-pane" id="rawoutput">
+               <code>
+               <br>
+               {% for line in raw_data %}
+               {{ line }}<br>
+               {% endfor %}
+               </code>
+            </div>
+         </div>
+      </div>
+   </div>
+   {% endblock %}
+</body>
